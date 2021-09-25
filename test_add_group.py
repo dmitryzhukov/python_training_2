@@ -1,51 +1,35 @@
 # -*- coding: utf-8 -*-
-import unittest
-
 from selenium.common.exceptions import NoAlertPresentException
 from selenium.common.exceptions import NoSuchElementException
 
 from application import Application
 from group import Group
 
-
-class TestAddGroup(unittest.TestCase):
-    def setUp(self):
-        self.app = Application()
-
-    def test_add_group(self):
-        self.app.open_home_page()
-        self.app.login(username="admin", password="secret")
-        self.app.open_groups_page()
-        self.app.create_group(Group(name="Test group", header="Test header", footer="Test footer"))
-        self.app.return_to_groups_page()
-        self.app.logout()
-
-    def test_add_group_empty(self):
-        self.app.open_home_page()
-        self.app.login(username="admin", password="secret")
-        self.app.open_groups_page()
-        self.app.create_group(Group(name="", header="", footer=""))
-        self.app.return_to_groups_page()
-        self.app.logout()
+import pytest
 
 
-    def is_element_present(self, how, what):
-        try:
-            self.wd.find_element(by=how, value=what)
-        except NoSuchElementException as e:
-            return False
-        return True
-
-    def is_alert_present(self):
-        try:
-            self.wd.switch_to_alert()
-        except NoAlertPresentException as e:
-            return False
-        return True
-
-    def tearDown(self):
-        self.app.destroy()
+@pytest.fixture
+def app(request):
+    fixture = Application()
+    request.addfinalizer(fixture.destroy)
+    return fixture
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_add_group(app):
+    app.open_home_page()
+    app.login(username="admin", password="secret")
+    app.open_groups_page()
+    app.create_group(Group(name="Test group", header="Test header", footer="Test footer"))
+    app.return_to_groups_page()
+    app.logout()
+
+
+def test_add_group_empty(app):
+    app.open_home_page()
+    app.login(username="admin", password="secret")
+    app.open_groups_page()
+    app.create_group(Group(name="", header="", footer=""))
+    app.return_to_groups_page()
+    app.logout()
+
+
