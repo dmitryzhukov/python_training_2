@@ -22,8 +22,7 @@ def test_add_contact(app):
                                mobile_phone="Test Mobile Phone", work_phone="Test Work Phone",
                                fax="Test Fax", email="Test@mail.ru", email2="Test2@mail.ru", email3="Test3@mail.ru",
                                homepage="Test Homepage", bday="1",
-                               bmonth="January", byear="2000", aday="2", amonth="February", ayear="2010",
-                               group="Test group", address="Test Address", home="Test Home",
+                               bmonth="January", byear="2000", aday="2", amonth="February", ayear="2010", address="Test Address", home="Test Home",
                                notes="Test Notes"))
     app.open_home_page()
     app.session.logout()
