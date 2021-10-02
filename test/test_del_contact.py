@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from model.contact import Contact
+import time
 
-def test_delete_first_group(app):
-    app.open_home_page()
-    app.session.login(username="admin", password="secret")
+def test_delete_first_contact(app):
     app.contact.open_contact_page()
     app.contact.delete_first_contact()
-    app.open_home_page()
-    app.session.logout()
+    time.sleep(1)

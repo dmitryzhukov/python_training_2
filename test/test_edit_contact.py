@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from model.contact import Contact
+import time
 
 def test_edit_first_contact(app):
-    app.open_home_page()
-    app.session.login(username="admin", password="secret")
     app.contact.open_contact_page()
     app.contact.edit_first_contact(Contact(firstname="Edit First name", middlename="Edit Middle name", lastname="Edit Last name",
                                nickname="Edit Nickname", title="Edit Title",
@@ -15,5 +14,4 @@ def test_edit_first_contact(app):
                                bmonth="January", byear="2000", aday="2", amonth="February", ayear="2010",
                                address="Edit Address", home="Edit Home",
                                notes="Edit Notes"))
-    app.open_home_page()
-    app.session.logout()
+    time.sleep(1)

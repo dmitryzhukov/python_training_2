@@ -2,11 +2,9 @@
 
 
 from model.contact import Contact
-
+import time
 
 def test_add_contact(app):
-    app.open_home_page()
-    app.session.login(username="admin", password="secret")
     app.contact.open_contact_page()
     app.contact.create(Contact(firstname="Test First name", middlename="Test Middle name", lastname="Test Last name",
                                nickname="Test Nickname", title="Test Title",
@@ -17,5 +15,4 @@ def test_add_contact(app):
                                bmonth="January", byear="2000", aday="2", amonth="February", ayear="2010",
                                address="Test Address", home="Test Home",
                                notes="Test Notes"))
-    app.open_home_page()
-    app.session.logout()
+    time.sleep(1)
