@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from model.contact import Contact
-import time
+
 
 def test_edit_first_contact(app):
     app.contact.open_contact_page()
@@ -14,4 +14,4 @@ def test_edit_first_contact(app):
                                bmonth="January", byear="2000", aday="2", amonth="February", ayear="2010",
                                address="Edit Address", home="Edit Home",
                                notes="Edit Notes"))
-    time.sleep(1)
+    
