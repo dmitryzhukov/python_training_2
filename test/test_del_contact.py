@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from model.contact import Contact
-
+from random import randrange
 
 def test_delete_first_contact(app):
     app.contact.open_contact_page()
@@ -19,11 +19,12 @@ def test_delete_first_contact(app):
 
     app.contact.open_contact_page()
     old_contacts = app.contact.get_contact_list()
-    app.contact.delete_first_contact()
+    index = randrange(len(old_contacts))
+    app.contact.delete_contact_by_index(index)
 
     app.contact.open_contact_page()
     new_contacts = app.contact.get_contact_list()
 
-    old_contacts.pop(0)
+    old_contacts[index:index+1] = []
 
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)

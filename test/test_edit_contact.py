@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from random import randrange
 from model.contact import Contact
 
 
@@ -19,6 +20,9 @@ def test_edit_first_contact(app):
 
     app.contact.open_contact_page()
     old_contacts = app.contact.get_contact_list()
+
+    index = randrange(len(old_contacts))
+
     contact = Contact(firstname="Edit First name", middlename="Edit Middle name", lastname="Edit Last name",
                                nickname="Edit Nickname", title="Edit Title",
                                company="Edit Company", address_company="Edit Address", home_phone="Edit Home Phone",
@@ -29,11 +33,11 @@ def test_edit_first_contact(app):
                                address="Edit Address", home="Edit Home",
                                notes="Edit Notes")
 
-    contact.id = old_contacts[0].id
-    app.contact.edit_first_contact(contact)
+    contact.id = old_contacts[index].id
+    app.contact.edit_contact_by_index(index, contact)
 
     app.contact.open_contact_page()
     new_contacts = app.contact.get_contact_list()
-    old_contacts[0] = contact
+    old_contacts[index] = contact
 
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
