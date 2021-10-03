@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from model.contact import Contact
-import time
 
 
 def test_delete_first_contact(app):
@@ -18,4 +17,4 @@ def test_delete_first_contact(app):
                                notes="Test Notes"))
     app.contact.open_contact_page()
     app.contact.delete_first_contact()
-    time.sleep(1)
+

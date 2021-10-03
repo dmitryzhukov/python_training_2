@@ -2,7 +2,7 @@
 
 
 from model.contact import Contact
-import time
+
 
 def test_add_contact(app):
     app.contact.open_contact_page()
@@ -15,4 +15,3 @@ def test_add_contact(app):
                                bmonth="January", byear="2000", aday="2", amonth="February", ayear="2010",
                                address="Test Address", home="Test Home",
                                notes="Test Notes"))
-    time.sleep(1)
