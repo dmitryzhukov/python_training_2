@@ -1,6 +1,8 @@
 from model.group import Group
 class GroupHelper:
 
+    groups_cache = None
+
     def __init__(self, app):
         self.app = app
 
@@ -17,6 +19,7 @@ class GroupHelper:
         self.fill_group(group, wd)
         # submit group creation
         wd.find_element_by_name("submit").click()
+        self.reset_cache()
 
     def delete_first_group(self):
         wd = self.app.wd
@@ -24,6 +27,7 @@ class GroupHelper:
         wd.find_element_by_name("selected[]").click()
         # submit deletion
         wd.find_element_by_name("delete").click()
+        self.reset_cache()
 
     def edit_first_group(self, group):
         wd = self.app.wd
@@ -35,6 +39,10 @@ class GroupHelper:
         self.fill_group(group, wd)
         # submit group creation
         wd.find_element_by_name("update").click()
+        self.reset_cache()
+
+    def reset_cache(self):
+        self.groups_cache = None
 
     def return_to_groups_page(self):
         wd = self.app.wd
@@ -55,11 +63,13 @@ class GroupHelper:
 
     def get_group_list(self):
         wd = self.app.wd
-        groups = []
-        
-        for element in wd.find_elements_by_css_selector("span.group"):
-            groupName = element.text
-            groupId = element.find_element_by_name("selected[]").get_attribute("value")
-            groups.append(Group(name=groupName, id=groupId))
 
-        return groups
+        if self.groups_cache is None:
+            self.groups_cache = []
+            
+            for element in wd.find_elements_by_css_selector("span.group"):
+                groupName = element.text
+                groupId = element.find_element_by_name("selected[]").get_attribute("value")
+                self.groups_cache.append(Group(name=groupName, id=groupId))
+
+        return list(self.groups_cache)    
