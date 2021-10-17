@@ -24,7 +24,6 @@ def test_add_contact(app):
     app.contact.open_contact_page()
 
     new_contacts = app.contact.get_contact_list()
-    contact.id = new_contacts[-1].id
     old_contacts.append(contact)
 
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
