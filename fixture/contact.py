@@ -18,7 +18,7 @@ class ContactHelper:
         # init contact creation
         wd.find_element_by_link_text("add new").click()
         # fill contact form
-        self.fill_contact(contact, wd)
+        self.fill_contact(contact)
         # click Enter
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
         self.reset_cache()
@@ -35,7 +35,7 @@ class ContactHelper:
         wd.find_elements_by_css_selector(
             "tr[name='entry'] img[title='Edit']")[index].click()
         # fill contact form
-        self.fill_contact(contact, wd)
+        self.fill_contact(contact)
         # submit update
         wd.find_element_by_name("update").click()
         self.reset_cache()
@@ -59,7 +59,7 @@ class ContactHelper:
             wd.find_element_by_name(key).clear()
             wd.find_element_by_name(key).send_keys(value)
 
-    def fill_contact(self, contact, wd):
+    def fill_contact(self, contact):
         self.set_field_value("firstname", contact.firstname)
         self.set_field_value("middlename", contact.middlename)
         self.set_field_value("lastname", contact.lastname)
@@ -75,13 +75,8 @@ class ContactHelper:
         self.set_field_value("email2", contact.email2)
         self.set_field_value("email3", contact.email3)
         self.set_field_value("homepage", contact.homepage)
-        self.set_field_value("bday", contact.bday)
 
-        self.set_field_value("bmonth", contact.bmonth)
         self.set_field_value("byear", contact.byear)
-        self.set_field_value("aday", contact.aday)
-        self.set_field_value("amonth", contact.amonth)
-        self.set_field_value("ayear", contact.ayear)
 
         self.set_field_value("address2", contact.address)
         self.set_field_value("phone2", contact.home)
