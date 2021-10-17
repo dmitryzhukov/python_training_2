@@ -5,7 +5,6 @@ from model.contact import Contact
 def test_edit_first_contact(app):
     app.open_home_page()
     app.session.login(username="admin", password="secret")
-    app.contact.open_contact_page()
     app.contact.edit_first_contact(Contact(firstname="Edit First name", middlename="Edit Middle name", lastname="Edit Last name",
                                nickname="Edit Nickname", title="Edit Title",
                                company="Edit Company", address_company="Edit Address", home_phone="Edit Home Phone",

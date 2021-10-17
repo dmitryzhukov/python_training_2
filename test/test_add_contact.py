@@ -7,7 +7,6 @@ from model.contact import Contact
 def test_add_contact(app):
     app.open_home_page()
     app.session.login(username="admin", password="secret")
-    app.contact.open_contact_page()
     app.contact.create(Contact(firstname="Test First name", middlename="Test Middle name", lastname="Test Last name",
                                nickname="Test Nickname", title="Test Title",
                                company="Test Company", address_company="Test Address", home_phone="Test Home Phone",
