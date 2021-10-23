@@ -1,7 +1,9 @@
 from sys import maxsize
-class Group:
 
-    def __init__(self, name = None, header = None, footer = None, id = None):
+
+class Group(object):
+
+    def __init__(self, name=None, header=None, footer=None, id=None):
         self.name = name
         self.header = header
         self.footer = footer

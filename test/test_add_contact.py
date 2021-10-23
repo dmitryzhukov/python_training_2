@@ -5,8 +5,8 @@ from data.data import test_contacts
 from model.contact import Contact
 
 
-@pytest.mark.parametrize("contact", test_contacts, ids=[repr(x) for x in test_contacts])
-def test_add_contact(app, contact):
+def test_add_contact(app, json_contacts):
+    contact = json_contacts
     app.contact.open_contact_page()
 
     old_contacts = app.contact.get_contact_list()

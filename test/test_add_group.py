@@ -5,8 +5,8 @@ from model.group import Group
 from data.data import test_grops
 
 
-@pytest.mark.parametrize("group", test_grops, ids=[repr(x) for x in test_grops])
-def test_add_group(app, group: Group):
+def test_add_group(app, json_groups):
+    group = json_groups
     app.group.open_groups_page()
 
     old_groups = app.group.get_group_list()
