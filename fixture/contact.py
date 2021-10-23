@@ -40,10 +40,34 @@ class ContactHelper:
         wd.find_element_by_name("update").click()
         self.reset_cache()
 
+    def open_edit_page_by_id(self, id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element_by_css_selector("a[href='edit.php?id=%s']" % id).click()
+
+    def edit_contact_by_id(self, id, new_contact_data):
+        wd = self.app.wd
+        self.open_contact_page()
+        self.open_edit_page_by_id(id)
+        # fill group form
+        self.fill_contact(new_contact_data)
+        # submit modification
+        wd.find_element_by_name("update").click()
+        self.reset_cache()
+
     def delete_contact_by_index(self, index):
         wd = self.app.wd
         # select first contact
         wd.find_elements_by_name("selected[]")[index].click()
+        # submit deletion
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to.alert.accept()
+        self.reset_cache()
+
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.open_contact_page()
+        self.select_contact_by_id(id)
         # submit deletion
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
@@ -58,6 +82,10 @@ class ContactHelper:
             wd.find_element_by_name(key).click()
             wd.find_element_by_name(key).clear()
             wd.find_element_by_name(key).send_keys(value)
+
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
 
     def fill_contact(self, contact):
         self.set_field_value("firstname", contact.firstname)
@@ -103,7 +131,8 @@ class ContactHelper:
                 all_emails = cells[4].text
                 address = cells[3].text
                 self.contacts_cache.append(
-                    Contact(firstname=name, id=id, lastname=surname, all_phones=all_phones, all_emails=all_emails, address=address))
+                    Contact(firstname=name, id=id, lastname=surname, all_phones=all_phones, all_emails=all_emails,
+                            address=address))
 
         return list(self.contacts_cache)
 
@@ -132,5 +161,6 @@ class ContactHelper:
 
         address = wd.find_element_by_name("address").get_attribute("value")
 
-        return Contact(firstname=firstname, lastname=lastname, id=id, home_phone=home_phone, work_phone=work_phone, mobile_phone=mobile_phone, secondary_phone=secondary_phone,
+        return Contact(firstname=firstname, lastname=lastname, id=id, home_phone=home_phone, work_phone=work_phone,
+                       mobile_phone=mobile_phone, secondary_phone=secondary_phone,
                        email=email, email2=email2, email3=email3, address=address)
