@@ -23,7 +23,7 @@ for o, a in opts:
         f = a
 
 
-testdata = [Contact(firstname="")] + [
+testdata = [Contact(firstname="", lastname="")] + [
     Contact(firstname=random_string("firstname", 6), lastname=random_string("lastname", 8))
     for i in range(n)
 ]
