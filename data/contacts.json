@@ -28,7 +28,8 @@
     "id": null,
     "secondary_phone": null,
     "all_phones": null,
-    "all_emails": null
+    "all_emails": null,
+    "group_id": null
   },
   {
     "py/object": "model.contact.Contact",
@@ -59,7 +60,8 @@
     "id": null,
     "secondary_phone": null,
     "all_phones": null,
-    "all_emails": null
+    "all_emails": null,
+    "group_id": null
   },
   {
     "py/object": "model.contact.Contact",
@@ -90,6 +92,7 @@
     "id": null,
     "secondary_phone": null,
     "all_phones": null,
-    "all_emails": null
+    "all_emails": null,
+    "group_id": null
   }
 ]

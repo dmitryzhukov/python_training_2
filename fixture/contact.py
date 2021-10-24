@@ -1,5 +1,7 @@
 from model.contact import Contact
+from model.group import Group
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.select import Select
 
 
 class ContactHelper:
@@ -12,6 +14,23 @@ class ContactHelper:
         wd = self.app.wd
         if not (wd.current_url.endswith("/addressbook/")):
             wd.get("http://localhost/addressbook/")
+
+    def deattach_contact_from_group(self, contact: Contact, group: Group):
+        wd = self.app.wd
+        self.open_contact_page()
+        Select(wd.find_element_by_css_selector(
+            "select[name='group']")).select_by_value(group.id)
+        self.select_contact_by_id(contact.id)
+        wd.find_element_by_css_selector("input[name='remove']").click()
+
+    def attach_contact_to_group(self, contact: Contact, group: Group):
+        wd = self.app.wd
+        self.open_contact_page()
+        self.select_contact_by_id(contact.id)
+        Select(wd.find_element_by_css_selector(
+            "select[name='to_group']")).select_by_value(group.id)
+        wd.find_element_by_css_selector("input[name='add']").click()
+        self.open_contact_page()
 
     def create(self, contact):
         wd = self.app.wd
@@ -43,7 +62,8 @@ class ContactHelper:
     def open_edit_page_by_id(self, id):
         wd = self.app.wd
         self.app.open_home_page()
-        wd.find_element_by_css_selector("a[href='edit.php?id=%s']" % id).click()
+        wd.find_element_by_css_selector(
+            "a[href='edit.php?id=%s']" % id).click()
 
     def edit_contact_by_id(self, id, new_contact_data):
         wd = self.app.wd
@@ -88,6 +108,7 @@ class ContactHelper:
         wd.find_element_by_css_selector("input[value='%s']" % id).click()
 
     def fill_contact(self, contact):
+        wd = self.app.wd
         self.set_field_value("firstname", contact.firstname)
         self.set_field_value("middlename", contact.middlename)
         self.set_field_value("lastname", contact.lastname)
@@ -109,6 +130,10 @@ class ContactHelper:
         self.set_field_value("address2", contact.address)
         self.set_field_value("phone2", contact.home)
         self.set_field_value("notes", contact.notes)
+
+        if contact.group_id is not None:
+            Select(wd.find_element_by_css_selector(
+                "select[name='new_group']")).select_by_value(contact.group_id)
 
     def count(self):
         wd = self.app.wd

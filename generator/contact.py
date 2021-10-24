@@ -1,14 +1,14 @@
-from model.contact import Contact
-import random
-import string
-import os.path
-import jsonpickle
 import getopt
+import os.path
 import sys
+
+import jsonpickle
 from fixture.string_generator import random_string
+from model.contact import Contact
 
 try:
-    opts, args = getopt.getopt(sys.argv[1:], "n:f:", ["number of contacts", "file"])
+    opts, args = getopt.getopt(sys.argv[1:], "n:f:", [
+                               "number of contacts", "file"])
 except getopt.GetoptError as err:
     getopt.usage()
     sys.exit(2)
@@ -24,7 +24,8 @@ for o, a in opts:
 
 
 testdata = [Contact(firstname="", lastname="")] + [
-    Contact(firstname=random_string("firstname", 6), lastname=random_string("lastname", 8))
+    Contact(firstname=random_string("firstname", 6),
+            lastname=random_string("lastname", 8))
     for i in range(n)
 ]
 

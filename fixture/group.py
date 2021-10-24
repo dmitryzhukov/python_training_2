@@ -1,4 +1,6 @@
 from model.group import Group
+
+
 class GroupHelper:
 
     groups_cache = None
@@ -14,6 +16,7 @@ class GroupHelper:
     def create(self, group):
         wd = self.app.wd
         # init group creation
+        self.open_groups_page()
         wd.find_element_by_name("new").click()
         # fill group form
         self.fill_group(group, wd)
@@ -80,13 +83,16 @@ class GroupHelper:
         wd.find_element_by_css_selector("input[value='%s']" % id).click()
 
     def fill_group(self, group, wd):
-        wd.find_element_by_name("group_name").click()
-        wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys(group.name)
-        wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys(group.header)
-        wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys(group.footer)
+        self.set_field_value("group_name", group.name)
+        self.set_field_value("group_header", group.header)
+        self.set_field_value("group_footer", group.footer)
+
+    def set_field_value(self, key, value):
+        wd = self.app.wd
+        if value is not None:
+            wd.find_element_by_name(key).click()
+            wd.find_element_by_name(key).clear()
+            wd.find_element_by_name(key).send_keys(value)
 
     def count(self):
         wd = self.app.wd
@@ -97,10 +103,11 @@ class GroupHelper:
 
         if self.groups_cache is None:
             self.groups_cache = []
-            
+
             for element in wd.find_elements_by_css_selector("span.group"):
                 groupName = element.text
-                groupId = element.find_element_by_name("selected[]").get_attribute("value")
+                groupId = element.find_element_by_name(
+                    "selected[]").get_attribute("value")
                 self.groups_cache.append(Group(name=groupName, id=groupId))
 
-        return list(self.groups_cache)    
+        return list(self.groups_cache)
