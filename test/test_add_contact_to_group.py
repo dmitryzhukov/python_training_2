@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import random
 import time
+import pytest
 
 from fixture.application import Application
 from fixture.orm import ORMFixture
@@ -8,6 +9,7 @@ from model.contact import Contact
 from model.group import Group
 
 
+@pytest.mark.skip(reason="XAMPP 8 ver")
 def test_add_contact_to_group(app: Application, orm: ORMFixture):
     if (len(orm.get_group_list()) == 0):
         app.group.create(Group(name="inital_group"))
